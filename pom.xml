@@ -34,7 +34,7 @@
 						<muleVersion>4.8.1</muleVersion>
 						<username>${env.PLATFORM_USERNAME}</username>
 						<password>${env.PLATFORM_PASSWORD}</password>
-						<applicationName>cicd-githubactions-apfeb22</applicationName>
+						<applicationName>final</applicationName>
 						<environment>Dev</environment>
 						<workers>1</workers>
 						<workerType>MICRO</workerType>
