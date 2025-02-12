@@ -31,7 +31,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<cloudHubDeployment>
-						<muleVersion>4.4.0</muleVersion>
+						<muleVersion>4.8.1</muleVersion>
 						<username>${env.PLATFORM_USERNAME}</username>
 						<password>${env.PLATFORM_PASSWORD}</password>
 						<applicationName>cicd-githubactions-apfeb22</applicationName>
