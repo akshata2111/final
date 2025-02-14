@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com.mycompany</groupId>
-	<artifactId>test-app</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<groupId>fb304765-5a71-4b9b-bfa6-58193b4dab6b</groupId>
+	<artifactId>cicd-test-pocs-test</artifactId>
+	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
-	<name>test-app</name>
-
+	<name>test-poc</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<app.runtime>4.8.1</app.runtime>
-		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
+		<app.runtime>4.6.1</app.runtime>
+		<mule.maven.plugin.version>3.4.2</mule.maven.plugin.version>
+		<munit.version>2.3.13</munit.version>
 	</properties>
 
 	<build>
@@ -30,23 +28,47 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<cloudHubDeployment>
-						<muleVersion>4.8.1</muleVersion>
-						<username>${env.PLATFORM_USERNAME}</username>
-						<password>${env.PLATFORM_PASSWORD}</password>
-						<applicationName>final</applicationName>
-						<environment>Sandbox</environment>
-						<workers>1</workers>
-						<workerType>MICRO</workerType>
-						<objectStoreV2>true</objectStoreV2>
-						<region>us-east-2</region>
-						<properties>
-							<http.port>8081</http.port>
-						</properties>
-					</cloudHubDeployment>
+					<cloudhubDeployment>
+					<envirnment>Sandbox</envirnment>
+					<workers>1</workers>
+					<workerType>Micro</workerType>
+					<muleVersion>4.6.1</muleVersion>
+					<objectStoreV2>true</objectStoreV2>
+					<applicationName>test-connected-app</applicationName>
+					<connectedAppGrantType>client_credentials</connectedAppGrantType>
+					<connectedAppClientId>582fe9649e2a49e3991c728b9366967c</connectedAppClientId>
+					<connectedAppClientSecret>E19b9Ab5b0694E7589e0F1a60a4284B6</connectedAppClientSecret>
+					</cloudhubDeployment>
+
 					<classifier>mule-application</classifier>
+					<sharedLibraries/>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.mulesoft.munit.tools</groupId>
+				<artifactId>munit-maven-plugin</artifactId>
+				<version>${munit.version}</version>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+							<goal>coverage-report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<coverage>
+						<runCoverage>true</runCoverage>
+						<requiredApplicationCoverage>80</requiredApplicationCoverage>
+						<formats>
+							<format>html</format>
+						</formats>
+					</coverage>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -55,24 +77,6 @@
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-http-connector</artifactId>
 			<version>1.10.3</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-sockets-connector</artifactId>
-			<version>1.2.5</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.connectors</groupId>
-			<artifactId>mule4-docusign-connector</artifactId>
-			<version>1.0.8</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-objectstore-connector</artifactId>
-			<version>1.2.2</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
@@ -90,8 +94,13 @@
 			<url>https://repository.mulesoft.org/releases/</url>
 			<layout>default</layout>
 		</repository>
+		<repository>
+			<id>anypoint-exchange-v2</id>
+			<name>Anypoint Exchange</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
+			<layout>default</layout>
+		</repository>
 	</repositories>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>mulesoft-releases</id>
@@ -103,5 +112,13 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>anypoint-exchange-v3</id>
+			<name>Corporate Exchange</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
 
 </project>
