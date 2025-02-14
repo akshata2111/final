@@ -1,9 +1,17 @@
 <settings>
-	<servers>
-    <server>
-      <id>anypoint-exchange-v2</id>
-      <username>${env.PLATFORM_USERNAME}</username>
-      <password>${env.PLATFORM_PASSWORD}</password>
-    </server>
-	</servers>
+
+<servers>
+
+<server>
+
+<id>anypoint-credentials</id>
+
+<username>Test-poc</username>
+
+<password>${582fe9649e2a49e3991c728b9366967c}~?~${E19b9Ab5b0694E7589e0F1a60a4284B6}</password>
+
+</server>
+
+</servers>
+
 </settings>
